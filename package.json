@@ -3,16 +3,27 @@
   "version": "1.0.0",
   "description": "test numbers",
   "scripts": {
-    "start": "nodemon api/server.js"
+    "start": "node api/server.js",
+    "lint": "standard"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "mongoose": "^5.0.7"
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "mongoose": "^5.4.19",
+    "socket.io": "^2.2.0",
+    "ws": "^6.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.15.1"
+    "jsdoc": "^3.5.5",
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "node_modules"
+    ]
   }
 }
