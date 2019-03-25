@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:4.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/usr/share/mongodb/data
+
+volumes:
+  mongodb:
+    driver: local
