@@ -1,19 +1,30 @@
 'use strict'
 
-const express = require('express');
-const bodyParser = require('body-parser');
+const http = require('http')
+const cors = require('cors')
+const express = require('express')
+const socket = require('socket.io')
+const bodyParser = require('body-parser')
 
-const mongo = require('./db/mongo');
-const NumberRoutes = require('./routes/number');
+const routes = require('./routes')
+const numberRepository = require('./repositories/Number/')
 
-const app = express();
+const app = express()
+const server = http.createServer(app)
+const io = socket(server)
+const port = process.env.PORT || 8000
 
-app.use(bodyParser.json());
-const port = process.env.PORT || 8000;
+app.use(cors())
+app.use(bodyParser.json())
+app.use('/api', routes)
 
-mongo.setUpDB();
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('register number', async (data) => {
+    console.log(data)
+    const result = await numberRepository.create(data)
+    socket.emit('created', result)
+  })
+})
 
-const numberRoutes = new NumberRoutes(app);
-numberRoutes.setUpRoutes();
-
-app.listen(port, () => {console.log(`server running on the port ${port}`)});
+server.listen(port, () => { console.log(`server running on the port ${port}`) })
